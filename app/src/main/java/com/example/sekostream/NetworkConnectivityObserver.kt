@@ -25,7 +25,7 @@ class NetworkConnectivityObserver(
 
                 override fun onLinkPropertiesChanged(
                     network: Network,
-                    linkProperties: LinkProperties
+                    linkProperties: LinkProperties,
                 ) {
                     super.onLinkPropertiesChanged(network, linkProperties)
                     launch { send(ConnectivityObserver.Status.Available) }

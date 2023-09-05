@@ -55,13 +55,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val tokenBuilderInstance = RtcTokenBuilder2()
-        //val repository = TokenRepository(tokenBuilderInstance)
-        // viewModel = ViewModelProvider(this,ViewModelFactory(repository)).get(MainViewModel::class.java)
+//        val tokenBuilderInstance = RtcTokenBuilder2()
+//        val repository = TokenRepository(tokenBuilderInstance)
+//        viewModel = ViewModelProvider(this,ViewModelFactory(repository)).get(MainViewModel::class.java)
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        // Registers BroadcastReceiver to track network connection changes.
+//        Registers BroadcastReceiver to track network connection changes.
 //        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
 //        receiver = NetworkReceiver()
 //        this.registerReceiver(receiver, filter)
@@ -70,7 +70,9 @@ class MainActivity : AppCompatActivity() {
 
         if (!checkSelfPermission()) {
             //if not granted then this if will work to ask for those permissions
-            ActivityCompat.requestPermissions(this, viewModel.requestedPermissions, viewModel.permissionReqId);
+            ActivityCompat.requestPermissions(this,
+                viewModel.requestedPermissions,
+                viewModel.permissionReqId);
         }
 
         viewModel.getToken(viewModel.channelName!!)
@@ -82,14 +84,14 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.connectivityObserver = NetworkConnectivityObserver(applicationContext)
 
-            viewModel.connectivityObserver.observe().onEach{
+        viewModel.connectivityObserver.observe().onEach {
 
-                Handler(Looper.getMainLooper()).postDelayed(Runnable {
-                    updateConnectedFlags()
-                    loadPage()
-                }, 500)
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                updateConnectedFlags()
+                loadPage()
+            }, 500)
 
-            }.launchIn(lifecycleScope)
+        }.launchIn(lifecycleScope)
 
         binding.LeaveButton.setOnClickListener {
             leaveCall()
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     RESTRICT_BACKGROUND_STATUS_WHITELISTED -> {
                         viewModel.dataSaverInfo = "inactive"
                     }
-                      RESTRICT_BACKGROUND_STATUS_DISABLED -> {
+                    RESTRICT_BACKGROUND_STATUS_DISABLED -> {
                         viewModel.dataSaverInfo = "inactive"
                         Toast.makeText(this@MainActivity, "data saver inactive", Toast.LENGTH_SHORT)
                             .show()
@@ -131,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if(!mobileConnected && !wifiConnected) leaveCall()
+        if (!mobileConnected && !wifiConnected) leaveCall()
 
     }
 
@@ -165,30 +167,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPage() {
 
-        if(viewModel.remoteJoined){
+        if (viewModel.remoteJoined) {
 
             if ((sPref == ANY && (wifiConnected || mobileConnected)) || (sPref == WIFI && wifiConnected)) {
 
                 if (wifiConnected || (viewModel.dataSaverInfo == "inactive")) {
 
-                    viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid, Constants.VIDEO_STREAM_HIGH);
+                    viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
+                        Constants.VIDEO_STREAM_HIGH);
                     Toast.makeText(this, "high performance mode", Toast.LENGTH_SHORT).show()
 
                 } else {
 
-                    viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid, Constants.VIDEO_STREAM_LOW);
+                    viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
+                        Constants.VIDEO_STREAM_LOW);
                     Toast.makeText(this, "data saving mode", Toast.LENGTH_SHORT).show()
                 }
 
-            }
+            } else if (mobileConnected) {
 
-            else if (mobileConnected) {
-
-                viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid, Constants.VIDEO_STREAM_LOW);
+                viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
+                    Constants.VIDEO_STREAM_LOW);
                 Toast.makeText(this, "low performance mode", Toast.LENGTH_SHORT).show()
-            }
-
-            else leaveCall()
+            } else leaveCall()
 
         }
 
