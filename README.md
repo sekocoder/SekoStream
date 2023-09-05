@@ -19,7 +19,7 @@
 # Concepts Used
 
  * MVVM (Model-View-View Model) App Architecture
- * Network and Battery optimization Methods
+ * Network and Battery Optimization Methods
  * Dependency Injection
  * State Management
  * View Binding
