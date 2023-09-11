@@ -175,20 +175,19 @@ class MainActivity : AppCompatActivity() {
 
                     viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
                         Constants.VIDEO_STREAM_HIGH);
-                    Toast.makeText(this, "high performance mode", Toast.LENGTH_SHORT).show()
 
                 } else {
 
                     viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
                         Constants.VIDEO_STREAM_LOW);
-                    Toast.makeText(this, "data saving mode", Toast.LENGTH_SHORT).show()
+
                 }
 
             } else if (mobileConnected) {
 
                 viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
                     Constants.VIDEO_STREAM_LOW);
-                Toast.makeText(this, "low performance mode", Toast.LENGTH_SHORT).show()
+
             } else leaveCall()
 
         }
