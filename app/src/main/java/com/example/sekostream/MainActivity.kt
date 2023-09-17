@@ -67,12 +67,13 @@ class MainActivity : AppCompatActivity() {
 //        this.registerReceiver(receiver, filter)
 
         viewModel.channelName = intent.getStringExtra("roomId").toString()
+        binding.channelNameDisplay.text = viewModel.channelName
 
         if (!checkSelfPermission()) {
             //if not granted then this if will work to ask for those permissions
             ActivityCompat.requestPermissions(this,
                 viewModel.requestedPermissions,
-                viewModel.permissionReqId);
+                viewModel.permissionReqId)
         }
 
         viewModel.getToken(viewModel.channelName!!)
@@ -174,19 +175,19 @@ class MainActivity : AppCompatActivity() {
                 if (wifiConnected || (viewModel.dataSaverInfo == "inactive")) {
 
                     viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
-                        Constants.VIDEO_STREAM_HIGH);
+                        Constants.VIDEO_STREAM_HIGH)
 
                 } else {
 
                     viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
-                        Constants.VIDEO_STREAM_LOW);
+                        Constants.VIDEO_STREAM_LOW)
 
                 }
 
             } else if (mobileConnected) {
 
                 viewModel.agoraEngine?.setRemoteVideoStreamType(viewModel.fetchedUid,
-                    Constants.VIDEO_STREAM_LOW);
+                    Constants.VIDEO_STREAM_LOW)
 
             } else leaveCall()
 
