@@ -1,11 +1,8 @@
 package com.example.sekostream
 
 import android.Manifest
-import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.net.NetworkInfo
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.agora.rtc2.*
@@ -22,10 +19,11 @@ class MainViewModel @Inject constructor(
     lateinit var sharedPrefs: SharedPreferences
     lateinit var connectivityObserver: ConnectivityObserver
     var expirationTimeInSeconds = 100
-    private val appId = "91846962361747a78118c68ad3357f32"
+    val appId = "91846962361747a78118c68ad33  957f32"
     var appCertificate = "c361280e836047dd99208c2611899c76"
-    private var token: String? = null
-    private val uid = 0
+    var token: String? = null
+    val uid = 0
+    var timestamp:Int =0
     var agoraEngine: RtcEngine? = null
     private var options = ChannelMediaOptions()
     val config = RtcEngineConfig()
@@ -36,7 +34,8 @@ class MainViewModel @Inject constructor(
 
 
     fun getToken(channelName: String) {
-        val timestamp = (System.currentTimeMillis() / 1000 + expirationTimeInSeconds).toInt()
+
+        timestamp = (System.currentTimeMillis() / 1000 + expirationTimeInSeconds).toInt()
         token = tokenRepository.getToken(appId, appCertificate, channelName, uid, timestamp)
     }
 
