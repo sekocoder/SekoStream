@@ -15,6 +15,8 @@
  * Connectivity Manager
  * Agora SDK
  * XML
+ * Mockito
+ * Espresso
 
 # Concepts Used
 
@@ -23,6 +25,8 @@
  * Dependency Injection
  * State Management
  * View Binding
+ * Dependency Injection
+ * Testing
    
 
 # Local Setup
