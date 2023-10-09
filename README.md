@@ -26,7 +26,6 @@
  * Dependency Injection
  * State Management
  * View Binding
- * Dependency Injection
  * Testing
    
 
